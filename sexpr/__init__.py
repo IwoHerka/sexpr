@@ -3,6 +3,8 @@ __version__ = '0.0.1'
 import os
 import yaml
 
+from .grammar import Grammar
+
 
 def load(source, options = None):
     if isinstance(source, str):
@@ -29,4 +31,4 @@ def load_string(string, options):
 
 
 def load_dict(dictionary, options):
-    pass
+    Grammar(dictionary, options)
