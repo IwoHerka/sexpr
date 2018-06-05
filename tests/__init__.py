@@ -27,3 +27,12 @@ class Test(unittest.TestCase):
     def test_load_from_dict(self):
         sexpr.load(dict(key='val'))
         self.assertEqual(True, True)
+
+    def test_merging_options(self):
+        first = dict(a=1, b=2)
+        second = dict(b=3, c=4)
+        third = sexpr.merge_options(first, second)
+        self.assertEqual(third['a'], 1)
+        self.assertEqual(third['b'], 3)
+        self.assertEqual(third['c'], 4)
+

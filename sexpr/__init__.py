@@ -3,6 +3,8 @@ __version__ = '0.0.1'
 import os
 import yaml
 
+from .utils import merge_options
+
 
 def load(source, options = None):
     if isinstance(source, str):
