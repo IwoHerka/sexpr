@@ -1,6 +1,7 @@
 __version__ = '0.0.1'
 
 import os
+import yaml
 
 
 def load(source, options = None):
@@ -17,11 +18,15 @@ def load(source, options = None):
         raise TypeError('Attempted to load grammar from '
                         'invalid source: %s' % type(source))
 
-def load_file(source, options):
-    pass
 
-def load_string(source, options):
-    pass
+def load_file(path, options):
+    with open(path) as f:
+        return load_string(f.read(), options)
 
-def load_dict(source, options):
+
+def load_string(string, options):
+    return load_dict(yaml.load(string), options)
+
+
+def load_dict(dictionary, options):
     pass
