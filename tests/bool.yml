@@ -1,0 +1,21 @@
+rules:
+    bool_expr:
+        - bool_and
+        - bool_or
+        - bool_not
+        - var_ref
+        - bool_lit
+    bool_and:
+        - [ bool_expr+ ]
+    bool_or:
+        - [ bool_expr+ ]
+    bool_not:
+        - [ bool_expr ]
+    bool_lit:
+        - [ literal ]
+    var_ref:
+        - [ var_name ]
+    var_name:
+        /^[a-z]+$/
+    literal:
+        [ true, false ]
