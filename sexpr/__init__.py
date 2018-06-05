@@ -3,8 +3,6 @@ __version__ = '0.0.1'
 import os
 import yaml
 
-from .utils import merge_options
-
 
 def load(source, options = None):
     if isinstance(source, str):
@@ -27,7 +25,7 @@ def load_file(path, options):
 
 
 def load_string(string, options):
-    return load_dict(yaml.load(string), options)
+    return load_dict(yaml.safe_load(string), options)
 
 
 def load_dict(dictionary, options):
