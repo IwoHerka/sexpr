@@ -2,6 +2,7 @@ import os
 import yaml
 
 from .grammar import Grammar
+from .yaml import Regexpr
 
 
 def load(source, options = None):
@@ -19,13 +20,15 @@ def load(source, options = None):
                         'invalid source: %s' % type(source))
 
 
-def load_file(path, options):
+def load_file(path, options = None):
     with open(path) as f:
+        options = options or {}
+        options.update({'path': path})
         return load_string(f.read(), options)
 
 
 def load_string(string, options):
-    return load_dict(yaml.safe_load(string), options)
+    return load_dict(yaml.load(string), options)
 
 
 def load_dict(dictionary, options):

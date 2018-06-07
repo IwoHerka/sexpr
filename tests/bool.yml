@@ -16,6 +16,6 @@ rules:
     var_ref:
         - [ var_name ]
     var_name:
-        /^[a-z]+$/
+        !regexpr /^[a-z]+$/
     literal:
         [ true, false ]
