@@ -120,3 +120,13 @@ class Test(unittest.TestCase):
         grammar = sexpr.load(bool_yml)
         s = ['type_ref', "::object"]
         self.assertEqual(grammar.matches(s), True)
+
+    def test_17(self):
+        grammar = sexpr.load(bool_yml)
+        s = ['optional', ['bool_lit', True], ['bool_lit', True]]
+        self.assertEqual(grammar.matches(s), True)
+
+    def test_18(self):
+        grammar = sexpr.load(bool_yml)
+        s = ['optional', ['bool_lit', True]]
+        self.assertEqual(grammar.matches(s), True)

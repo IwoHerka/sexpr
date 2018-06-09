@@ -6,8 +6,13 @@ rules:
         - type_ref
         - bool_or
         - bool_not
+        - optional
     bool_and:
         - [ bool_expr+ ]
+    binary_and:
+        - [ bool_expr, bool_expr ]
+    optional:
+        - [ bool_expr, 'bool_expr?' ]
     bool_or:
         - [ bool_expr+ ]
     bool_not:

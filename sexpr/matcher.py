@@ -48,7 +48,7 @@ class Matcher(object):
 
         elif isinstance(body, str):
             if self.re_many.match(body):
-                return Many(self.compile_body('bool_expr'), '+')
+                return Multiple(self.compile_body('bool_expr'), '+')
 
             elif self.re_reference.match(body):
                 return Reference(body, grammar)
@@ -59,4 +59,4 @@ class Matcher(object):
         raise TypeError('Unsupported expression: %s of type: %s' % (body, type(body)))
 
 
-from .types import Terminal, Alternative, NonTerminal, Reference, Rule, Many, Sequence
+from .types import *
