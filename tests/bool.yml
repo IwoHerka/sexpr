@@ -17,5 +17,7 @@ rules:
         - [ var_name ]
     var_name:
         !regexpr /^[a-z]+$/
+    var_namez:
+        ::object
     literal:
         [ true, false ]

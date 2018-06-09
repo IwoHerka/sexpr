@@ -23,7 +23,10 @@ class Test(unittest.TestCase):
     #     self.assertEqual(True, True)
 
     def test_load_from_file(self):
-        sexpr.load(bool_yml)
+        grammar = sexpr.load(bool_yml)
+
+        print(grammar.rules['bool_expr'])
+
         self.assertEqual(True, True)
 
     # def test_load_from_dict(self):

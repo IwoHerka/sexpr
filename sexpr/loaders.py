@@ -32,4 +32,7 @@ def load_string(string, options):
 
 
 def load_dict(dictionary, options):
-    Grammar(dictionary, options)
+    for k, v in dictionary['rules'].items():
+        print('%s: %s' % (k, v))
+    print('---------------------------')
+    return Grammar(dictionary, options)
