@@ -31,24 +31,28 @@ class Matcher(object):
         return Rule(name, rule)
 
     def compile_body(self, body, grammar = None):
-        print(body, type(body))
         grammar = grammar or self
 
         if isinstance(body, (bool, NoneType, Regexpr)):
             return Terminal(body)
+
         elif isinstance(body, list):
+            if len(body) == 1 and isinstance(body[0], list):
+                return Sequence([self.compile_body(b, grammar) for b in body[0]])
+
             return Alternative([self.compile_body(b, grammar) for b in body])
+
         elif isinstance(body, str):
             if self.re_many.match(body):
                 return Many(self.compile_body('bool_expr'), '+')
+
             elif self.re_reference.match(body):
                 return Reference(body, grammar)
+
             elif self.re_terminal.match(body):
-                found = body[2:]
-                return Terminal(found)
+                return Terminal(body[2:])
 
-        raise TypeError('Unsupported expression: %s' % body)
-
+        raise TypeError('Unsupported expression: %s of type: %s' % (body, type(body)))
 
 
-from .types import Terminal, Alternative, NonTerminal, Reference, Rule, Many
+from .types import Terminal, Alternative, NonTerminal, Reference, Rule, Many, Sequence

@@ -68,3 +68,11 @@ class Rule(Matcher):
 
     def __repr__(self):
         return '(rule %s, %s)' % (self.name, self.body)
+
+
+class Sequence(Matcher):
+    def __init__(self, term):
+        self.term = term
+
+    def __repr__(self):
+        return '(seq %s)' % self.term
