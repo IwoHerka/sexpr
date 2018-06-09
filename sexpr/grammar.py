@@ -12,7 +12,5 @@ class Grammar(Matcher):
         self.options = merge_options(self.default_options, options or {})
         self.path = self.options.get('path', None)
         self.rules = self.compile_rules(source.get('rules', {}))
-
-    # def parse(self, source, options = None):
-    #     options = merge_options(self.default_parser_options, options or {})
-    #     return parser.parse(source, options)
+        # TODO: Rewrite this ugliness.
+        self.root = self.options.get('root', list(source['rules'].items())[0][0])

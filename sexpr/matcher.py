@@ -13,11 +13,12 @@ class Matcher(object):
     def __getitem__(self, key):
         return self.rules[key]
 
+    @property
     def root_rule(self):
-        return self.rules['root']
+        return self.rules[self.root]
 
     def matches(self, sexpr):
-        return self.root_rule().matches(sexpr)
+        return self.root_rule.matches(sexpr)
 
     def compile_rules(self, rules):
         return {k: self.compile_rule(k, v) for k, v in rules.items()}

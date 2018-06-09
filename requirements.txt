@@ -1,1 +1,2 @@
 pyyaml==3.12
+yamlloader==0.5.2

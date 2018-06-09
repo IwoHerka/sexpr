@@ -1,5 +1,6 @@
 import os
 import yaml
+import yamlloader
 
 from .grammar import Grammar
 from .yaml import Regexpr
@@ -28,11 +29,11 @@ def load_file(path, options = None):
 
 
 def load_string(string, options):
-    return load_dict(yaml.load(string), options)
+    return load_dict(yaml.load(string, Loader=yamlloader.ordereddict.CLoader), options)
 
 
 def load_dict(dictionary, options):
-    for k, v in dictionary['rules'].items():
-        print('%s: %s' % (k, v))
-    print('---------------------------')
+    # for k, v in dictionary['rules'].items():
+    #     print('%s: %s' % (k, v))
+    # print('---------------------------')
     return Grammar(dictionary, options)
