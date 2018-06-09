@@ -1,7 +1,6 @@
 import os
 import sexpr
 import unittest
-import yaml
 
 from sexpr.utils import merge_options
 

@@ -34,8 +34,11 @@ class Matcher(object):
     def compile_body(self, body, grammar = None):
         grammar = grammar or self
 
-        if isinstance(body, (bool, NoneType, Regexpr)):
-            return Terminal(body)
+        if isinstance(body, (bool, NoneType)):
+            return Terminal(body, Terminal.VALUE)
+
+        elif isinstance(body, Regexpr):
+            return Terminal(body, Terminal.REGEXPR)
 
         elif isinstance(body, list):
             if len(body) == 1 and isinstance(body[0], list):
@@ -51,7 +54,7 @@ class Matcher(object):
                 return Reference(body, grammar)
 
             elif self.re_terminal.match(body):
-                return Terminal(body[2:])
+                return Terminal(body[2:], Terminal.TYPE)
 
         raise TypeError('Unsupported expression: %s of type: %s' % (body, type(body)))
 
