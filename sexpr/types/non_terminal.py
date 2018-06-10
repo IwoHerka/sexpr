@@ -11,7 +11,8 @@ class NonTerminal(Matcher):
             return self.body.matches(sexpr[1:])
 
     def eat(self, sexpr):
-        return sexpr[1:] if self.matches(sexpr[0]) else None
+        if sexpr:
+            return sexpr[1:] if self.matches(sexpr[0]) else None
 
     def __repr__(self):
         return '(non-terminal %s, %s)' % (self.name, self.body)

@@ -1,0 +1,58 @@
+rules:
+    predicate:
+        - tautology
+        - contradiction
+        - identifier
+        - not
+        - and
+        - or
+        - eq
+        - neq
+        - lt
+        - lte
+        - gt
+        - gte
+        - in
+        - native
+    tautology:
+        - [ True ]
+    contradiction:
+        - [ False ]
+    identifier:
+        - [ name ]
+    qualified_identifier:
+        - [ name, name ]
+    not:
+        - [ predicate ]
+    and:
+        - [ predicate+ ]
+    or:
+        - [ predicate+ ]
+    eq:
+        - [ term, term ]
+    neq:
+        - [ term, term ]
+    lt:
+        - [ term, term ]
+    lte:
+        - [ term, term ]
+    gt:
+        - [ term, term ]
+    gte:
+        - [ term, term ]
+    in:
+        - [ varref, values ]
+    term:
+        - varref
+        - literal
+    varref:
+        - qualified_identifier
+        - identifier
+    native:
+        - [ '=function' ]
+    literal:
+        - '~object'
+    values:
+        - '~object'
+    name:
+        !regexpr '[a-zA-Z0-9_]+[?!]?'

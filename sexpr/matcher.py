@@ -2,7 +2,6 @@ import re
 
 from .yaml import Regexpr
 
-
 # Mapping from Backus-Naur repetition operator symbols to tuples
 # representing bounds.
 #
@@ -22,7 +21,7 @@ factor_strictness = {
     '~': False
 }
 
-# Compiled regular expressions objects for symbol matching.
+# Compiled regular expressions objects for symbol matching (see `compile_str`).
 re_many      = re.compile('.*[\?\+\*]')
 re_reference = re.compile('[a-z][a-z_]+')
 re_terminal  = re.compile('[=~]([a-zA-z][a-z]*.*)')
@@ -47,7 +46,7 @@ class Matcher(object):
     def compile_rule(self, name, body):
         rule = self.compile_body(body)
 
-        if not isinstance(rule, Terminal) and not isinstance(rule, Alternative):
+        if not (isinstance(rule, Terminal) or isinstance(rule, Alternative)):
             rule = NonTerminal(name, rule)
 
         return Rule(name, rule)
@@ -57,13 +56,10 @@ class Matcher(object):
 
         if isinstance(body, (bool, NoneType)):
             return Terminal(body, Terminal.VALUE)
-
         elif isinstance(body, Regexpr):
             return Terminal(body, Terminal.REGEXPR)
-
         elif isinstance(body, list):
             return self.compile_list(body, grammar)
-
         elif isinstance(body, str):
             return self.compile_str(body, grammar)
 

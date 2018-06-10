@@ -1,5 +1,5 @@
-from .utils import merge_options
 from .matcher import Matcher
+from .utils import merge_options
 
 NoneType = type(None)
 

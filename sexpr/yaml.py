@@ -1,5 +1,6 @@
-import yaml
 import re
+
+import yaml
 
 
 class Regexpr(yaml.YAMLObject):
