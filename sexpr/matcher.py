@@ -62,24 +62,30 @@ class Matcher(object):
             return Terminal(body, Terminal.REGEXPR)
 
         elif isinstance(body, list):
-            if len(body) == 1 and isinstance(body[0], list):
-                return Sequence([self.compile_body(b, grammar) for b in body[0]])
-
-            return Alternative([self.compile_body(b, grammar) for b in body])
+            return self.compile_list(body, grammar)
 
         elif isinstance(body, str):
-            if re_many.match(body):
-                bounds = factor_operator[body[-1]]
-                return Multiple(self.compile_body(body[0:-1]), *bounds)
-
-            elif re_reference.match(body):
-                return Reference(body, grammar)
-
-            elif re_terminal.match(body):
-                strict = factor_strictness[body[0]]
-                return Terminal(body[1:], Terminal.TYPE, strict=strict)
+            return self.compile_str(body, grammar)
 
         raise TypeError('Unsupported expression: %s of type: %s' % (body, type(body)))
+
+    def compile_list(self, li, grammar):
+        if len(li) == 1 and isinstance(li[0], list):
+            return Sequence([self.compile_body(b, grammar) for b in li[0]])
+
+        return Alternative([self.compile_body(b, grammar) for b in li])
+
+    def compile_str(self, string, grammar):
+        if re_many.match(string):
+            bounds = factor_operator[string[-1]]
+            return Multiple(self.compile_body(string[0:-1]), *bounds)
+
+        elif re_reference.match(string):
+            return Reference(string, grammar)
+
+        elif re_terminal.match(string):
+            strict = factor_strictness[string[0]]
+            return Terminal(string[1:], Terminal.TYPE, strict=strict)
 
 
 from .types import *
