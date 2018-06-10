@@ -3,26 +3,29 @@ import re
 from .yaml import Regexpr
 
 
-'''
-Mapping from Backus-Naur repetition operator symbols to tuples
-representing bounds.
-
-Keys: symbol (str): BNF repetition operator symbol (?, +, *)
-Values: (int, int/NoneType): Tuple representing min/max bounds.
-        None should be interpreted as infinity.
-'''
+# Mapping from Backus-Naur repetition operator symbols to tuples
+# representing bounds.
+#
+# Keys: symbol (str): BNF repetition operator symbol (?, +, *)
+# Values: (int, int/NoneType): Tuple representing min/max bounds.
+#         None should be interpreted as infinity.
 factor_operator = {
     '?': (0, 1),
     '+': (1, None),
     '*': (0, None)
 }
 
-'''
-Compiled regular expressions objects for symbol matching.
-'''
+# Mapping from strictness operator symbol to boolean specifying whether
+# type checking should be strict.
+factor_strictness = {
+    '=': True,
+    '~': False
+}
+
+# Compiled regular expressions objects for symbol matching.
 re_many      = re.compile('.*[\?\+\*]')
 re_reference = re.compile('[a-z][a-z_]+')
-re_terminal  = re.compile('::([a-zA-z][a-z]*.*)')
+re_terminal  = re.compile('[=~]([a-zA-z][a-z]*.*)')
 
 NoneType = type(None)
 
@@ -73,7 +76,8 @@ class Matcher(object):
                 return Reference(body, grammar)
 
             elif re_terminal.match(body):
-                return Terminal(body[2:], Terminal.TYPE)
+                strict = factor_strictness[body[0]]
+                return Terminal(body[1:], Terminal.TYPE, strict=strict)
 
         raise TypeError('Unsupported expression: %s of type: %s' % (body, type(body)))
 

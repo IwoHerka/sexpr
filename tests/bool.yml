@@ -3,7 +3,9 @@ rules:
         - bool_and
         - bool_lit
         - var_ref
-        - type_ref
+        - obj_ref
+        - int_ref
+        - iterable_ref
         - bool_or
         - bool_not
         - optional
@@ -21,11 +23,19 @@ rules:
         - [ literal ]
     var_ref:
         - [ var_name ]
-    type_ref:
-        - [ var_type ]
+    obj_ref:
+        - [ obj_type ]
+    int_ref:
+        - [ obj_type ]
+    iterable_ref:
+        - [ iterable_type ]
     var_name:
         !regexpr '[a-z]+'
-    var_type:
-        '::object'
+    obj_type:
+        '=object'
+    int_type:
+        '~int'
+    iterable_type:
+        [ '~list', '~tuple' ]
     literal:
         [ true, false ]

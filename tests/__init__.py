@@ -113,12 +113,12 @@ class Test(unittest.TestCase):
 
     def test_15(self):
         grammar = sexpr.load(bool_yml)
-        s = ['var_type', "::object"]
+        s = ['var_type', object()]
         self.assertEqual(grammar.matches(s), False)
 
     def test_16(self):
         grammar = sexpr.load(bool_yml)
-        s = ['type_ref', "::object"]
+        s = ['obj_ref', object()]
         self.assertEqual(grammar.matches(s), True)
 
     def test_17(self):
