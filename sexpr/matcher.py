@@ -2,14 +2,32 @@ import re
 
 from .yaml import Regexpr
 
+
+'''
+Mapping from Backus-Naur repetition operator symbols to tuples
+representing bounds.
+
+Keys: symbol (str): BNF repetition operator symbol (?, +, *)
+Values: (int, int/NoneType): Tuple representing min/max bounds.
+        None should be interpreted as infinity.
+'''
+factor_operator = {
+    '?': (0, 1),
+    '+': (1, None),
+    '*': (0, None)
+}
+
+'''
+Compiled regular expressions objects for symbol matching.
+'''
+re_many      = re.compile('.*[\?\+\*]')
+re_reference = re.compile('[a-z][a-z_]+')
+re_terminal  = re.compile('::([a-zA-z][a-z]*.*)')
+
 NoneType = type(None)
 
 
 class Matcher(object):
-    re_many = re.compile('.*[\?\+\*]')
-    re_reference = re.compile('[a-z][a-z_]+')
-    re_terminal = re.compile('::([a-zA-z][a-z]*.*)')
-
     def __getitem__(self, key):
         return self.rules[key]
 
@@ -47,13 +65,14 @@ class Matcher(object):
             return Alternative([self.compile_body(b, grammar) for b in body])
 
         elif isinstance(body, str):
-            if self.re_many.match(body):
-                return Multiple(self.compile_body('bool_expr'), '+')
+            if re_many.match(body):
+                bounds = factor_operator[body[-1]]
+                return Multiple(self.compile_body(body[0:-1]), *bounds)
 
-            elif self.re_reference.match(body):
+            elif re_reference.match(body):
                 return Reference(body, grammar)
 
-            elif self.re_terminal.match(body):
+            elif re_terminal.match(body):
                 return Terminal(body[2:], Terminal.TYPE)
 
         raise TypeError('Unsupported expression: %s of type: %s' % (body, type(body)))

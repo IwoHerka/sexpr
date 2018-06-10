@@ -2,10 +2,10 @@ from ..matcher import Matcher
 
 
 class Multiple(Matcher):
-    def __init__(self, term, lower):
+    def __init__(self, term, lower, higher = None):
         self.term = term
-        self.lower = 1
-        self.higher = None
+        self.lower = lower
+        self.higher = higher
 
     def matches(self, sexpr):
         if isinstance(sexpr, list):
