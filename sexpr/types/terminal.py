@@ -10,11 +10,15 @@ class Terminal(Matcher):
         self.value = value
         self.type = ttype
         if self.type == self.TYPE:
-            self.type_cls = eval(self.value)
+            if self.value == 'function':
+                from types import FunctionType
+                self.type_cls = FunctionType
+            else:
+                self.type_cls = eval(self.value)
             self.strict = strict
 
     def matches(self, sexpr):
-        if self.type == self.REGEXPR:
+        if isinstance(sexpr, str) and self.type == self.REGEXPR:
             return self.value.matches(sexpr)
         elif self.type == self.TYPE:
             if self.strict:
@@ -24,7 +28,7 @@ class Terminal(Matcher):
         return self.value == sexpr
 
     def eat(self, sexpr):
-        return sexpr[1:] if self.matches(sexpr[0]) else None
+        return sexpr[1:] if sexpr and self.matches(sexpr[0]) else None
 
     def __repr__(self):
         return '(terminal %s)' % self.value

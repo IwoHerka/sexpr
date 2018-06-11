@@ -6,16 +6,13 @@ class Sequence(Matcher):
         self.terms = terms
 
     def matches(self, sexpr):
-        if isinstance(sexpr, list):
-            eaten = self.eat(sexpr)
-            assert isinstance(eaten, (type(None), list))
-            return eaten != None and len(eaten) == 0
+        rest = self.eat(sexpr)
+        return rest != None and len(rest) == 0
 
     def eat(self, sexpr):
         rest = sexpr
         for t in self.terms:
             rest = t.eat(rest)
-            assert isinstance(rest, (type(None), list))
         return rest
 
     def __repr__(self):

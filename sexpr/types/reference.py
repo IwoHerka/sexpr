@@ -8,14 +8,13 @@ class Reference(Matcher):
 
     @property
     def rule(self):
-        return self.grammar[self.name]
+        return self.grammar[self.name] if self.name in self.grammar else None
 
     def matches(self, sexpr):
         return self.rule and self.rule.matches(sexpr)
 
     def eat(self, sexpr):
-        if self.rule:
-            return self.rule.eat(sexpr)
+        return self.rule.eat(sexpr) if self.rule else None
 
     def __repr__(self):
         return '(ref %s ...)' % self.name

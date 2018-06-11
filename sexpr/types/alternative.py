@@ -10,9 +10,9 @@ class Alternative(Matcher):
 
     def eat(self, sexpr):
         for t in self.terms:
-            res = t.eat(sexpr)
-            if res != None:
-                return res
+            rest = t.eat(sexpr)
+            if rest != None:
+                return rest
 
     def __repr__(self):
         return '(alt %s)' % self.terms
