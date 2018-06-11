@@ -1,8 +1,8 @@
 rules:
     predicate:
+        - identifier
         - tautology
         - contradiction
-        - identifier
         - not
         - and
         - or
@@ -20,8 +20,6 @@ rules:
         - [ False ]
     identifier:
         - [ name ]
-    qualified_identifier:
-        - [ name, name ]
     not:
         - [ predicate ]
     and:
@@ -41,18 +39,17 @@ rules:
     gte:
         - [ term, term ]
     in:
-        - [ varref, values ]
+        - [ var_ref, values ]
     term:
-        - varref
+        - var_ref
         - literal
-    varref:
-        - qualified_identifier
+    var_ref:
         - identifier
     native:
         - [ '=function' ]
     literal:
-        - '~object'
+        - '~int'
     values:
-        - '~object'
+        '~object'
     name:
-        !regexpr '[a-zA-Z0-9_]+[?!]?'
+        !regexpr '[a-zA-Z0-9_]+'
