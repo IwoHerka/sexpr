@@ -1,7 +1,7 @@
-import yaml
 import unittest
 
 from sexpr.types import *
+from ..utils import fake_list
 
 
 class MatchingUnitTest(unittest.TestCase):
@@ -44,3 +44,8 @@ class MatchingUnitTest(unittest.TestCase):
         for e in mismatching:
             self.assertEqual(len(seq.eat(e)), 1)
             self.assertFalse(seq.matches(e))
+
+        for _ in range(10):
+            li = fake_list()
+            if li != [True, False]:
+                self.assertFalse(seq.matches(e))
