@@ -6,6 +6,8 @@ class Sequence(Matcher):
         self.terms = terms
 
     def matches(self, sexpr):
+        if not isinstance(sexpr, list):
+            raise TypeError('Expected a sequence, got {}.'.format(sexpr))
         rest = self.eat(sexpr)
         return rest != None and len(rest) == 0
 
