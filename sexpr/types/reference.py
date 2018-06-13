@@ -8,7 +8,7 @@ class Reference(Matcher):
 
     @property
     def rule(self):
-        return self.grammar[self.name] if self.name in self.grammar else None
+        return self.grammar.get(self.name, None)
 
     def matches(self, sexpr):
         return self.rule and self.rule.matches(sexpr)

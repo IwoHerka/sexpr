@@ -36,6 +36,9 @@ class Matcher(object):
     def __contains__(self, key):
         return key in self.rules
 
+    def get(self, key, default = None):
+        return self.rules.get(key, default)
+
     @property
     def root_rule(self):
         return self.rules[self.root]
