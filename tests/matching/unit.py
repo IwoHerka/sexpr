@@ -1,7 +1,7 @@
 import unittest
 
 from sexpr.types import *
-from ..utils import fake_list
+from ..utils import random_list
 
 
 class MatchingUnitTest(unittest.TestCase):
@@ -45,7 +45,8 @@ class MatchingUnitTest(unittest.TestCase):
             self.assertEqual(len(seq.eat(e)), 1)
             self.assertFalse(seq.matches(e))
 
-        for _ in range(10):
-            li = fake_list()
+        for i in range(10):
+            li = random_list(seed=i)
+            print(li)
             if li != [True, False]:
                 self.assertFalse(seq.matches(e))
