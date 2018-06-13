@@ -6,47 +6,21 @@ from ..utils import random_list
 
 class MatchingUnitTest(unittest.TestCase):
     def test_sequence(self):
-        invalid = [
-            [],
-            (),
-            ((),),
-            ((),()),
-            [[]],
-            [[], []],
-            [True, True],
-            [False, False],
-            [False, True, False],
-            [False, True],
-            [object()],
-            (object(),),
-            [object(), object()]
+        valid_terms = [
+            (True,  Terminal(True, Terminal.VALUE)),
+            (False, Terminal(False, Terminal.VALUE))
         ]
 
-        mismatching = [
-            [True, False, False],
-            [True, False, object()]
-        ]
+        valid, terms = [list(t) for t in zip(*valid_terms)]
+        seq = Sequence(terms)
+        self.assertTrue(seq.matches(valid))
 
-        true = Terminal(True, Terminal.VALUE)
-        false = Terminal(False, Terminal.VALUE)
-        seq = Sequence([true, false])
+        for seed in range(20):
+            invalid = random_list(seed=seed)
 
-        self.assertTrue(seq.matches([True, False]))
-
-        for e in invalid:
-            if isinstance(e, list):
-                self.assertFalse(seq.matches(e))
-            else:
-                with self.assertRaises(TypeError):
-                    seq.matches(e)
-            self.assertEqual(seq.eat(e), None)
-
-        for e in mismatching:
-            self.assertEqual(len(seq.eat(e)), 1)
-            self.assertFalse(seq.matches(e))
-
-        for i in range(10):
-            li = random_list(seed=i)
-            print(li)
-            if li != [True, False]:
-                self.assertFalse(seq.matches(e))
+            if invalid != valid:
+                mismatching = valid + invalid
+                self.assertFalse(seq.matches(invalid))
+                self.assertEqual(seq.eat(invalid), None)
+                self.assertEqual(len(seq.eat(mismatching)), len(invalid))
+                self.assertFalse(seq.matches(invalid))
