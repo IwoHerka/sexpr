@@ -12,6 +12,7 @@ class Multiple(Matcher):
             rest = self.eat(sexpr)
             if rest != None:
                 return len(rest) == 0
+        return False
 
     def eat(self, sexpr):
         i, last = 0, sexpr
