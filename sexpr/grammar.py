@@ -9,8 +9,13 @@ class Grammar(Matcher):
     default_parser_options = {}
 
     def __init__(self, source, options = None):
+        rules = source.get('rules', {})
+
         self.options = merge_options(self.default_options, options or {})
         self.path = self.options.get('path', None)
-        self.rules = self.compile_rules(source.get('rules', {}))
-        # TODO: Rewrite this ugliness.
-        self.root = self.options.get('root', list(source['rules'].items())[0][0])
+        self.rules = self.compile_rules(rules)
+
+        try:
+            self.root = self.options.get('root', list(rules.items())[0][0])
+        except IndexError:
+            self.root = None
