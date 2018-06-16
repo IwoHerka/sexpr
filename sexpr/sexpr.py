@@ -1,6 +1,17 @@
+def inject(sexpr, func):
+    body = func(*sexpr[1:] if sexpr else None)
+    body = body if isinstance(body, tuple) else (body, )
+    return [sexpr[0], *body]
+
+
+def extend(sexpr, func):
+    return func(sexpr)
+
+
 class Sexpr(object):
-    def __init__(self, sexpr):
+    def __init__(self, sexpr, grammar):
         self.sexpr = sexpr
+        self.grammar = grammar
 
     def __getitem__(self, index):
         return self.sexpr[index]
@@ -14,12 +25,10 @@ class Sexpr(object):
         return self.sexpr[1:] if self.sexpr else None
 
     def inject(self, func):
-        body = func(*self.body)
-        body = body if isinstance(body, tuple) else (body, )
-        self.sexpr = [self.tag, *body]
+        self.sexpr = inject(self.sexpr, func)
 
     def extend(self, func):
-        self.sexpr = func(self.sexpr)
+        self.sexpr = extend(self.sexpr, func)
 
     def __repr__(self):
-        return str(self.sexpr)
+        return '(sexpr {})'.format(self.sexpr)

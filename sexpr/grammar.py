@@ -1,4 +1,5 @@
 from .matcher import Matcher
+from .sexpr import Sexpr
 from .utils import merge_options
 
 NoneType = type(None)
@@ -19,3 +20,8 @@ class Grammar(Matcher):
             self.root = self.options.get('root', list(rules.items())[0][0])
         except IndexError:
             self.root = None
+
+    def sexpr(self, sexpr):
+        if isinstance(sexpr, Sexpr):
+            return sexpr
+        return Sexpr(sexpr, self) if self.matches(sexpr) else None
