@@ -12,6 +12,12 @@ class Sequence(Matcher):
         return rest != None and len(rest) == 0
 
     def eat(self, sexpr):
+        '''
+        Notes: Sequence works a bit different than other nodes.
+        This method (like others) expectes a list. However, sequence matches
+        against the list, whereas other nodes try to match against elements
+        of the list.
+        '''
         rest = sexpr
         for t in self.terms:
             rest = t.eat(rest)
