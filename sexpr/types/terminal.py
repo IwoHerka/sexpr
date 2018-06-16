@@ -28,7 +28,10 @@ class Terminal(Matcher):
         return self.value == sexpr
 
     def eat(self, sexpr):
-        return sexpr[1:] if sexpr and self.matches(sexpr[0]) else None
+        try:
+            return sexpr[1:] if sexpr and self.matches(sexpr[0]) else None
+        except:
+            pass
 
     def __repr__(self):
         return '(terminal %s)' % self.value
