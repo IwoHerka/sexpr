@@ -4,12 +4,10 @@ import unittest
 
 import sexpr
 
-__location__ = os.path.realpath(
-    os.path.join(os.getcwd(), os.path.dirname(__file__))
+pd = os.path.realpath(
+    os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), os.pardir)
 )
-
-sql_yml = os.path.join(__location__, 'predicate.yml')
-grammar = sexpr.load(sql_yml)
+grammar = sexpr.load(os.path.join(pd, 'predicate.yml'))
 
 
 class CompositionTest(unittest.TestCase):

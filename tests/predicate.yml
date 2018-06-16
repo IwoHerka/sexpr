@@ -50,6 +50,6 @@ rules:
     literal:
         - '~int'
     values:
-        '~object'
+        '=set'
     name:
         !regexpr '[a-zA-Z0-9_]+'
