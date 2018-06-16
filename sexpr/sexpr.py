@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 def inject(sexpr, func):
     body = func(*sexpr[1:] if sexpr else None)
     body = body if isinstance(body, tuple) else (body, )
@@ -29,6 +32,9 @@ class Sexpr(object):
 
     def extend(self, func):
         self.sexpr = extend(self.sexpr, func)
+
+    def copy(self):
+        return deepcopy(self.body)
 
     def __repr__(self):
         return '(sexpr {})'.format(self.sexpr)
