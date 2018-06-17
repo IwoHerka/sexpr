@@ -1,5 +1,5 @@
-Matcher Types
-=============
+sexpr.types package
+===================
 
 Alternative
 -----------

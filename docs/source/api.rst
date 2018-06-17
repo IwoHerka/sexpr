@@ -49,7 +49,6 @@ Yaml
     :undoc-members:
     :member-order: bysource
 
-
 .. toctree::
 
     api.types
