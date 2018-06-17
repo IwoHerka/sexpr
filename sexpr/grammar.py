@@ -15,7 +15,6 @@ grammar_str_form = \
 
 class Grammar(Matcher):
     default_options = {}
-    default_parser_options = {}
 
     def __init__(self, source, options = None):
         rules = source.get('rules', {})
@@ -27,7 +26,7 @@ class Grammar(Matcher):
         try:
             self.root = self.options.get('root', list(rules.items())[0][0])
         except IndexError:
-            self.root = None
+            raise ValueError('Cannot load root node. Grammar is ill-formed.')
 
     def sexpr(self, sexpr):
         if isinstance(sexpr, Sexpr):
