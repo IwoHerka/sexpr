@@ -2,7 +2,15 @@ from .matcher import Matcher
 from .sexpr import Sexpr
 from .utils import merge_options
 
-NoneType = type(None)
+grammar_str_form = \
+'''(grammar
+    path:
+        {}
+    root:
+        {}
+    rules:
+        {}
+)'''
 
 
 class Grammar(Matcher):
@@ -25,3 +33,15 @@ class Grammar(Matcher):
         if isinstance(sexpr, Sexpr):
             return sexpr
         return Sexpr(sexpr, self) if self.matches(sexpr) else None
+
+    def __repr__(self):
+        print_rule = lambda r: '{} = {}'.format(r.name, r.body)
+
+        return grammar_str_form.format(
+            self.path if self.path else '-',
+            self.root,
+            '\n        '.join(print_rule(r) for r in self.rules.values())
+        )
+
+    def __str__(self):
+        return self.__repr__()
