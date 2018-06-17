@@ -61,10 +61,19 @@ pygments_style = 'sphinx'
 #
 html_theme = 'alabaster'
 
+html_theme_options = {
+    'show_related': True,
+    'fixed_sidebar': True,
+    'github_repo': 'sexpr',
+    'github_user': 'IwoHerka',
+    'github_banner': True,
+    'show_powered_by': False,
+}
+
 html_sidebars = {
     'index': [
         'sidebarintro.html',
-        'localtoc.html'
+        'searchbox.html'
     ],
     '**': [
         'localtoc.html',
@@ -78,16 +87,6 @@ html_sidebars = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-
-# Custom sidebar templates, must be a dictionary that maps document names
-# to template names.
-#
-# The default sidebars (for documents that don't match any pattern) are
-# defined by theme itself.  Builtin themes are using these templates by
-# default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
-# 'searchbox.html']``.
-#
-# html_sidebars = {}
 
 
 # -- Options for HTMLHelp output ---------------------------------------------

@@ -16,13 +16,17 @@ body {
 div.admonition p.admonition-title, div.sphinxsidebar h3, div.sphinxsidebar h4,
 div.sphinxsidebar input, div.body h1, div.body h2, div.body h3, div.body h4,
 div.body h5, div.body h6 {
-    font-family: 'Roboto Slab'
+    font-family: 'Roboto Slab' !important;
     font-weight: 400;
 }
 
 div.body h1, div.body h2, div.body h3, div.body h4,
 div.body h5, div.body h6 {
     color: #353535;
+}
+
+div.sphinxsidebar ul li > a {
+    font-size: 100% !important;
 }
 
 pre, code {
@@ -41,13 +45,8 @@ div.body h1 {
     font-size: 28px;
 }
 
-div.body h2 {
-    font-size: 18px;
-}
-
-div.sphinxsidebarwrapper {
-    position: fixed;
-    width: 220px;
+div.body h2, div.sphinxsidebar h3 {
+    font-size: 20px;
 }
 
 div.body                    { color: #3E4349; }

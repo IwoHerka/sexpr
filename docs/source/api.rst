@@ -1,6 +1,3 @@
-sexpr package
-=============
-
 Grammar
 -------
 
@@ -48,6 +45,10 @@ Yaml
     :members:
     :undoc-members:
     :member-order: bysource
+
+
+Types
+-----
 
 .. toctree::
 

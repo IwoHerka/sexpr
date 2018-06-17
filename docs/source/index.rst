@@ -35,6 +35,7 @@ Documentation
 Those articles will guide you through all of the library's usage patterns.
 
 .. toctree::
+    :maxdepth: 2
 
     quickstart
     defining_grammar

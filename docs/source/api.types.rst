@@ -1,8 +1,5 @@
-sexpr.types package
-===================
-
 Alternative
------------
+^^^^^^^^^^^
 
 .. automodule:: sexpr.types.alternative
     :members:
@@ -10,15 +7,15 @@ Alternative
     :show-inheritance:
 
 Multiple
---------
+^^^^^^^^
 
 .. automodule:: sexpr.types.multiple
     :members:
     :undoc-members:
     :show-inheritance:
 
-Non-Terminal
-------------
+Non_Terminal
+^^^^^^^^^^^^
 
 .. automodule:: sexpr.types.non_terminal
     :members:
@@ -26,7 +23,7 @@ Non-Terminal
     :show-inheritance:
 
 Reference
----------
+^^^^^^^^^
 
 .. automodule:: sexpr.types.reference
     :members:
@@ -34,7 +31,7 @@ Reference
     :show-inheritance:
 
 Rule
-----
+^^^^
 
 .. automodule:: sexpr.types.rule
     :members:
@@ -42,7 +39,7 @@ Rule
     :show-inheritance:
 
 Sequence
---------
+^^^^^^^^
 
 .. automodule:: sexpr.types.sequence
     :members:
@@ -50,7 +47,7 @@ Sequence
     :show-inheritance:
 
 Terminal
---------
+^^^^^^^^
 
 .. automodule:: sexpr.types.terminal
     :members:
