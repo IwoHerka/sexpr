@@ -35,12 +35,13 @@ def load_file(path, options = None):
         return load_string(f.read(), options)
 
 
-def load_string(string, options):
+def load_string(string, options = None):
     return load_dict(yaml.load(string, Loader=yamlloader.ordereddict.Loader), options)
 
 
-def load_dict(dictionary, options):
-    # for k, v in dictionary['rules'].items():
-    #     print('%s: %s' % (k, v))
-    # print('---------------------------')
+def load_dict(dictionary, options = None):
+    options = options or {}
+    if 'root' in dictionary and not 'root' in options:
+        # Move 'root' from source to options.
+        options.update(root = dictionary['root'])
     return Grammar(dictionary, options)
