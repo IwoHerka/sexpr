@@ -59,10 +59,10 @@ class Matcher(object):
         grammar = grammar or self
 
         if isinstance(body, bool):
-            return Terminal(body, Terminal.VALUE)
+            return ValueTerminal(body)
 
         elif isinstance(body, Regexpr):
-            return Terminal(body, Terminal.REGEXPR)
+            return RegexpTerminal(body)
 
         elif isinstance(body, list):
             return self.compile_list(body, grammar)
@@ -88,7 +88,7 @@ class Matcher(object):
 
         elif re_terminal.match(string):
             strict = factor_strictness[string[0]]
-            return Terminal(string[1:], Terminal.TYPE, strict=strict)
+            return TypeTerminal(string[1:], strict)
 
 
 from .types import *

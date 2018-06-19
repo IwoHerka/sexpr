@@ -2,30 +2,8 @@ from ..matcher import Matcher
 
 
 class Terminal(Matcher):
-    REGEXPR = 'regexpr'
-    TYPE    = 'type'
-    VALUE   = 'value'
-
-    def __init__(self, value, ttype, strict = None):
+    def __init__(self, value):
         self.value = value
-        self.type = ttype
-        if self.type == self.TYPE:
-            if self.value == 'function':
-                from types import FunctionType
-                self.type_cls = FunctionType
-            else:
-                self.type_cls = eval(self.value)
-            self.strict = strict
-
-    def matches(self, sexpr):
-        if isinstance(sexpr, str) and self.type == self.REGEXPR:
-            return self.value.matches(sexpr)
-        elif self.type == self.TYPE:
-            if self.strict:
-                return type(sexpr) is self.type_cls
-            return isinstance(sexpr, self.type_cls)
-
-        return self.value == sexpr
 
     def pop(self, sexpr):
         try:
@@ -35,3 +13,32 @@ class Terminal(Matcher):
 
     def __repr__(self):
         return '(terminal %s)' % self.value
+
+
+class ValueTerminal(Terminal):
+    def matches(self, sexp):
+        return self.value == sexp
+
+
+class TypeTerminal(Terminal):
+    def __init__(self, value, strict):
+        self.value = value
+        self.strict = strict
+
+        if self.value == 'function':
+            from types import FunctionType
+            self.type_cls = FunctionType
+        else:
+            self.type_cls = eval(self.value)
+
+    def matches(self, sexp):
+        if self.strict:
+            return type(sexp) is self.type_cls
+        return isinstance(sexp, self.type_cls)
+
+
+class RegexpTerminal(Terminal):
+    def matches(self, sexp):
+        if isinstance(sexp, (str, bytes)):
+            return self.value.matches(sexp)
+        return False

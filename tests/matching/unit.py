@@ -11,11 +11,11 @@ from ..utils import random_list
 
 # Terminals and corresponding valid values.
 terminals = [
-    (True,             Terminal(True, Terminal.VALUE)),
-    ('string',         Terminal(Regexpr('[a-z]+'), Terminal.REGEXPR)),
-    (777,              Terminal('int', Terminal.TYPE, True)),
-    (dict(a=1),        Terminal('dict', Terminal.TYPE, True)),
-    (OrderedDict(a=1), Terminal('dict', Terminal.TYPE, False))
+    (True,             ValueTerminal(True)),
+    ('string',         RegexpTerminal(Regexpr('[a-z]+'))),
+    (777,              TypeTerminal('int', True)),
+    (dict(a=1),        TypeTerminal('dict', True)),
+    (OrderedDict(a=1), TypeTerminal('dict', False))
 ]
 
 # Values quaranteed to be invalid (w.r.t to `terminals`).

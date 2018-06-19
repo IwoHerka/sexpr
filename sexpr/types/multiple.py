@@ -28,4 +28,4 @@ class Multiple(Matcher):
         return last if i >= self.lower else None
 
     def __repr__(self):
-        return '(many %s, %s)' % (self.term, self.lower)
+        return '(multiple %s, %s)' % (self.term, self.lower)
