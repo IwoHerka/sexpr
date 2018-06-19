@@ -24,7 +24,8 @@ class Grammar(Matcher):
         self.rules = self.compile_rules(rules)
 
         try:
-            self.root = self.options.get('root', list(rules.items())[0][0])
+            self.root = self.options.get('root', None)
+            self.root = self.root or list(rules.items())[0][0]
         except IndexError:
             raise ValueError('Cannot load root node. Grammar is ill-formed.')
 
