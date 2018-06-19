@@ -7,24 +7,24 @@ class Multiple(Matcher):
         self.lower = lower
         self.higher = higher
 
-    def matches(self, sexpr):
+    def matches(self, sexp):
         if not self.lower:
             return True
 
-        if isinstance(sexpr, list):
-            rest = self.pop(sexpr)
-            if rest != None:
-                return len(rest) == 0
+        if isinstance(sexp, list):
+            if self.pop(sexp) == []:
+                return True
+
         return False
 
-    def pop(self, sexpr):
-        i, last = 0, sexpr
-        while sexpr and (not self.higher or i < self.higher):
-            res = self.term.pop(sexpr)
+    def pop(self, sexp):
+        i, last = 0, sexp
+        while sexp and (not self.higher or i < self.higher):
+            res = self.term.pop(sexp)
             if res != None:
                 last = res
                 i += 1
-            sexpr = res
+            sexp = res
         return last if i >= self.lower else None
 
     def __repr__(self):

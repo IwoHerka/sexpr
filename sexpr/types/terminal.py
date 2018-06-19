@@ -5,11 +5,9 @@ class Terminal(Matcher):
     def __init__(self, value):
         self.value = value
 
-    def pop(self, sexpr):
-        try:
-            return sexpr[1:] if sexpr and self.matches(sexpr[0]) else None
-        except:
-            pass
+    def pop(self, sexp):
+        if sexp and isinstance(sexp, list):
+            return sexp[1:] if self.matches(sexp[0]) else None
 
     def __repr__(self):
         return '(terminal %s)' % self.value
@@ -18,6 +16,13 @@ class Terminal(Matcher):
 class ValueTerminal(Terminal):
     def matches(self, sexp):
         return self.value == sexp
+
+
+class RegexpTerminal(Terminal):
+    def matches(self, sexp):
+        if isinstance(sexp, (str, bytes)):
+            return self.value.matches(sexp)
+        return False
 
 
 class TypeTerminal(Terminal):
@@ -35,10 +40,3 @@ class TypeTerminal(Terminal):
         if self.strict:
             return type(sexp) is self.type_cls
         return isinstance(sexp, self.type_cls)
-
-
-class RegexpTerminal(Terminal):
-    def matches(self, sexp):
-        if isinstance(sexp, (str, bytes)):
-            return self.value.matches(sexp)
-        return False

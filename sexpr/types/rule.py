@@ -6,11 +6,11 @@ class Rule(Matcher):
         self.name = name
         self.body = body
 
-    def matches(self, sexpr):
-        return self.body.matches(sexpr)
+    def matches(self, sexp):
+        return self.body.matches(sexp)
 
-    def pop(self, sexpr):
-        return self.body.pop(sexpr)
+    def pop(self, sexp):
+        return self.body.pop(sexp)
 
     def __repr__(self):
         return '(rule %s, %s)' % (self.name, self.body)
