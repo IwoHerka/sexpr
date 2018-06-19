@@ -26,8 +26,6 @@ re_many      = re.compile('.*[\?\+\*]')
 re_reference = re.compile('[a-z][a-z_]+')
 re_terminal  = re.compile('[=~]([a-zA-z][a-z]*.*)')
 
-NoneType = type(None)
-
 
 class Matcher(object):
     def __getitem__(self, key):
@@ -60,12 +58,15 @@ class Matcher(object):
     def compile_body(self, body, grammar = None):
         grammar = grammar or self
 
-        if isinstance(body, (bool, NoneType)):
+        if isinstance(body, bool):
             return Terminal(body, Terminal.VALUE)
+
         elif isinstance(body, Regexpr):
             return Terminal(body, Terminal.REGEXPR)
+
         elif isinstance(body, list):
             return self.compile_list(body, grammar)
+
         elif isinstance(body, str):
             return self.compile_str(body, grammar)
 
