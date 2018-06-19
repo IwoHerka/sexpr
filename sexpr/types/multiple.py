@@ -8,6 +8,9 @@ class Multiple(Matcher):
         self.higher = higher
 
     def matches(self, sexpr):
+        if not self.lower:
+            return True
+
         if isinstance(sexpr, list):
             rest = self.eat(sexpr)
             if rest != None:
