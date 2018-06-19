@@ -2,7 +2,6 @@ import os
 import sexpr
 import unittest
 
-from sexpr.utils import merge_options
 from sexpr.grammar import Grammar
 
 
@@ -64,11 +63,3 @@ class LoadersTest(unittest.TestCase):
         # Test options override default root.
         grammar = sexpr.load(source)
         self.assertEqual(grammar.root, 'exp1')
-
-    def test_merging_options(self):
-        first = dict(a=1, b=2)
-        second = dict(b=3, c=4)
-        third = merge_options(first, second)
-        self.assertEqual(third['a'], 1)
-        self.assertEqual(third['b'], 3)
-        self.assertEqual(third['c'], 4)

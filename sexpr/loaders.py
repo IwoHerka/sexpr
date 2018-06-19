@@ -4,13 +4,6 @@ import yaml
 import yamlloader
 
 from .grammar import Grammar
-from .yaml import Regexpr
-
-
-def regexpr_constructor(loader, node):
-    return Regexpr(node.value)
-
-yaml.add_constructor(u'!regexpr', regexpr_constructor)
 
 
 def load(source, options = None):
@@ -31,7 +24,7 @@ def load(source, options = None):
 def load_file(path, options = None):
     with open(path) as f:
         options = options or {}
-        options.update({'path': path})
+        options.update(dict(path=path))
         return load_string(f.read(), options)
 
 

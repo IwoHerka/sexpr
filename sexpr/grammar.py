@@ -1,9 +1,8 @@
 from .matcher import Matcher
 from .sexpr import Sexpr
-from .utils import merge_options
 
-grammar_str_form = \
-'''(grammar
+_str_format = '''
+(grammar
     path:
         {}
     root:
@@ -14,12 +13,10 @@ grammar_str_form = \
 
 
 class Grammar(Matcher):
-    default_options = {}
-
     def __init__(self, source, options = None):
         rules = source.get('rules', {})
 
-        self.options = merge_options(self.default_options, options or {})
+        self.options = options or {}
         self.path = self.options.get('path', None)
         self.rules = self.compile_rules(rules)
 
@@ -37,11 +34,8 @@ class Grammar(Matcher):
     def __repr__(self):
         print_rule = lambda r: '{} = {}'.format(r.name, r.body)
 
-        return grammar_str_form.format(
-            self.path if self.path else '-',
+        return _str_format.format(
+            self.path or '-',
             self.root,
             '\n        '.join(print_rule(r) for r in self.rules.values())
         )
-
-    def __str__(self):
-        return self.__repr__()
