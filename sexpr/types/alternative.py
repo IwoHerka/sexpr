@@ -8,9 +8,9 @@ class Alternative(Matcher):
     def matches(self, sexpr):
         return any(t.matches(sexpr) for t in self.terms)
 
-    def eat(self, sexpr):
+    def pop(self, sexpr):
         for t in self.terms:
-            rest = t.eat(sexpr)
+            rest = t.pop(sexpr)
             if rest != None:
                 return rest
 

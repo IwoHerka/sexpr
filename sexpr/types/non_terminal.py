@@ -20,7 +20,7 @@ class NonTerminal(Matcher):
             return self.body.matches(sexpr[1:])
         return False
 
-    def eat(self, sexpr):
+    def pop(self, sexpr):
         '''
         Assuming *s-expr* of the form::
 

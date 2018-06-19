@@ -9,8 +9,8 @@ class Rule(Matcher):
     def matches(self, sexpr):
         return self.body.matches(sexpr)
 
-    def eat(self, sexpr):
-        return self.body.eat(sexpr)
+    def pop(self, sexpr):
+        return self.body.pop(sexpr)
 
     def __repr__(self):
         return '(rule %s, %s)' % (self.name, self.body)

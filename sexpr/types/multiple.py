@@ -12,15 +12,15 @@ class Multiple(Matcher):
             return True
 
         if isinstance(sexpr, list):
-            rest = self.eat(sexpr)
+            rest = self.pop(sexpr)
             if rest != None:
                 return len(rest) == 0
         return False
 
-    def eat(self, sexpr):
+    def pop(self, sexpr):
         i, last = 0, sexpr
         while sexpr and (not self.higher or i < self.higher):
-            res = self.term.eat(sexpr)
+            res = self.term.pop(sexpr)
             if res != None:
                 last = res
                 i += 1

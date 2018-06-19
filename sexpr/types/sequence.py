@@ -8,10 +8,10 @@ class Sequence(Matcher):
     def matches(self, sexpr):
         if not isinstance(sexpr, list):
             raise TypeError('Expected a sequence, got {}.'.format(sexpr))
-        rest = self.eat(sexpr)
+        rest = self.pop(sexpr)
         return rest != None and len(rest) == 0
 
-    def eat(self, sexpr):
+    def pop(self, sexpr):
         '''
         Notes: Sequence works a bit different than other nodes.
         This method (like others) expectes a list. However, sequence matches
@@ -20,7 +20,7 @@ class Sequence(Matcher):
         '''
         rest = sexpr
         for t in self.terms:
-            rest = t.eat(rest)
+            rest = t.pop(rest)
         return rest
 
     def __repr__(self):

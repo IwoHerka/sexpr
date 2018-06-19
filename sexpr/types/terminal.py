@@ -27,7 +27,7 @@ class Terminal(Matcher):
 
         return self.value == sexpr
 
-    def eat(self, sexpr):
+    def pop(self, sexpr):
         try:
             return sexpr[1:] if sexpr and self.matches(sexpr[0]) else None
         except:
