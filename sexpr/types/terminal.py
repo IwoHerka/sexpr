@@ -1,3 +1,4 @@
+from types import *
 from ..matcher import Matcher
 
 
@@ -29,12 +30,7 @@ class TypeTerminal(Terminal):
     def __init__(self, value, strict):
         self.value = value
         self.strict = strict
-
-        if self.value == 'function':
-            from types import FunctionType
-            self.type_cls = FunctionType
-        else:
-            self.type_cls = eval(self.value)
+        self.type_cls = eval(self.value)
 
     def matches(self, sexp):
         if self.strict:

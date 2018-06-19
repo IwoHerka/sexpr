@@ -46,7 +46,7 @@ rules:
     var_ref:
         - identifier
     native:
-        - [ '=function' ]
+        - [ '=FunctionType' ]
     literal:
         - '~int'
     values:
