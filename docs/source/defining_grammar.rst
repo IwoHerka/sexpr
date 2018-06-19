@@ -13,7 +13,7 @@ Basic notions
 
 Notation used in **sexpr** it very similar to `ENBF
 <https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form>`_.
-Simiarly, grammar is defined in terms or *rules*. Rules can be
+Every grammar is defined in terms or *rules*. Rules can be
 *terminal* or *non-terminal*. Simply put, non-terminal rules
 are all rules that correspond to concrete nodes in the end s-expression,
 whereas terminal rules always define substitution.
