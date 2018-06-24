@@ -1,11 +1,19 @@
+## S-expression toolkit for Python
+
 [![Build Status](https://travis-ci.org/IwoHerka/sexpr.svg?branch=master)](https://travis-ci.org/IwoHerka/sexpr)
 [![Coverage Status](https://coveralls.io/repos/github/IwoHerka/sexpr/badge.svg?branch=master)](https://coveralls.io/github/IwoHerka/sexpr?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/dc96c6c6dc5141c4ba956bedb35c120f)](https://www.codacy.com/app/IwoHerka/sexpr?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=IwoHerka/sexpr&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/bd380c4f4a9848a87a20/maintainability)](https://codeclimate.com/github/IwoHerka/sexpr/maintainability)
 
-## Python S-expression Toolkit
+**sexpr** is small and compact toolkit for working with s-expressions in Python.
 
-**sexpr** is a very small and very simple toolkit for working with s-expressions in Python. It provides:
+If want a quick summary of the features have a look at the README and when ready
+check out full <a href="http://sexpr.readthedocs.io/en/latest/">documentation</a>.
+Finally, for example usage, you can read about
+<a href="https://github.com/IwoHerka/booldog">booldog</a> - micro-package for
+compiling s-expression into predicate functions.
+
+In short, **sexpr** is:
 
 #### 1. Meta-syntax notation for grammar definition in YAML, similar to EBNF:
 
@@ -59,7 +67,7 @@ grammar = sexpr.load('''
             [ false ]
 ''')
 
-# Every grammar must have a root node. 
+# Every grammar must have a root node.
 # You can point to the root explicitly with 'root' key.
 # Otherwise, root is taken as the first rule in the definition.
 
