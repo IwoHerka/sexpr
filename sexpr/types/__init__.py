@@ -4,4 +4,5 @@ from .non_terminal import NonTerminal
 from .reference import Reference
 from .rule import Rule
 from .sequence import Sequence
-from .terminal import Terminal
+from .terminal import (Terminal, ValueTerminal,
+                       TypeTerminal, RegexpTerminal)

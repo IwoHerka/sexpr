@@ -6,7 +6,7 @@ class NonTerminal(Matcher):
         self.name = name
         self.body = body
 
-    def matches(self, sexpr):
+    def matches(self, sexp):
         '''
         Body of a non-terminal is always a :class:`Sequence`. For an s-expr
         to match, it must be of the form::
@@ -16,11 +16,11 @@ class NonTerminal(Matcher):
         where the first list contains a name of the non-terminal,
         and the second one matches its body sequence.
         '''
-        if isinstance(sexpr, list) and self.name == sexpr[0]:
-            return self.body.matches(sexpr[1:])
+        if sexp and isinstance(sexp, list) and self.name == sexp[0]:
+            return self.body.matches(sexp[1:])
         return False
 
-    def eat(self, sexpr):
+    def pop(self, sexp):
         '''
         Assuming *s-expr* of the form::
 
@@ -30,7 +30,8 @@ class NonTerminal(Matcher):
         that of required by :meth:`~NonTerminal.matches`. If it doesn't,
         None is returned.
         '''
-        return sexpr[1:] if sexpr and self.matches(sexpr[0]) else None
+        if sexp and isinstance(sexp, list):
+            return sexp[1:] if self.matches(sexp[0]) else None
 
     def __repr__(self):
         return '(non-terminal %s)' % self.body

@@ -45,6 +45,29 @@ dictionary:
     '=dict' # Strict check. This will match dict() but not OrderedDict().
 ```
 
+You can load grammar from YAML, string or dict:
+
+```python
+grammar = sexpr.load('''
+    rules:
+        root_rule:
+            - some_rule
+            - other_rule
+        some_rule:
+            [ false ]
+        other_rule:
+            [ false ]
+''')
+
+# Every grammar must have a root node. 
+# You can point to the root explicitly with 'root' key.
+# Otherwise, root is taken as the first rule in the definition.
+
+grammar.root_node
+# (rule root_rule, (alt [(ref some_rule ...), (ref other_rule ...)]))
+```
+
+
 #### 2. Validation of s-expressions against defined grammar:
 
 ```python
