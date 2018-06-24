@@ -43,17 +43,17 @@ def random_list(max_len = 10, seed = None, constructors = None):
     if seed:
         random.seed(seed)
 
-    choices = (
-        lambda     _: choice(constructors)(),
-        lambda depth: gen_list(depth),
-        lambda depth: tuple(gen_list(depth))
-    )
-
     def gen_list(depth):
         return [
             choice(choices)(depth + 1)
             for _ in range(max(randint(1, max_len) - depth, 0))
         ]
+
+    choices = (
+        gen_list,
+        lambda     _: choice(constructors)(),
+        lambda depth: tuple(gen_list(depth))
+    )
 
     return gen_list(0)
 

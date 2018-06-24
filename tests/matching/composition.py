@@ -1,5 +1,4 @@
 import os
-import yaml
 import unittest
 
 import sexpr
@@ -26,10 +25,6 @@ class CompositionTest(unittest.TestCase):
     def test_matches_valid_regexpr(self):
         e = ['identifier', 'foo']
         self.assertTrue(grammar.matches(e))
-
-    def test_cannot_match_invalid_regexpr(self):
-        e = ['identifier', '&^51*=']
-        self.assertFalse(grammar.matches(e))
 
     def test_cannot_match_invalid_regexpr(self):
         e = ['identifier', '&^51*=']

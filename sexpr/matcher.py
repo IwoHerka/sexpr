@@ -41,8 +41,8 @@ class Matcher(object):
     def root_rule(self):
         return self.rules[self.root]
 
-    def matches(self, sexpr):
-        return self.root_rule.matches(sexpr)
+    def matches(self, sexp):
+        return self.root_rule.matches(sexp)
 
     def compile_rules(self, rules):
         return {k: self.compile_rule(k, v) for k, v in rules.items()}
