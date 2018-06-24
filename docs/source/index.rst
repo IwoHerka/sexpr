@@ -1,7 +1,9 @@
  .. image:: _static/logo.png
    :align: center
 
-sexpr - s-expression toolkit for Python
+.. rst-class:: centered
+
+S-expression toolkit for Python
 =======================================
 
 .. image:: https://travis-ci.org/IwoHerka/sexpr.svg?branch=master
@@ -42,6 +44,7 @@ Those articles will guide you through all of the library's usage patterns.
     loading_grammar
     verifing_expressions
     manipulating_expressions
+    utilities
 
 API Reference
 -------------

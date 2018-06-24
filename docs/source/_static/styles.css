@@ -1,3 +1,4 @@
+ @import url('https://fonts.googleapis.com/css?family=Roboto');
 @font-face {
     font-family: "Ubuntu Mono";
     src: url("./UbuntuMono-Regular.ttf");
@@ -9,8 +10,12 @@
 }
 
 body {
-    font-family: 'Ubuntu Mono';
+    font-family: 'Roboto';
     font-size: 15px;
+}
+
+pre {
+    background-color: #f6f6f6 !important;
 }
 
 div.admonition p.admonition-title, div.sphinxsidebar h3, div.sphinxsidebar h4,
@@ -30,9 +35,18 @@ div.sphinxsidebar ul li > a {
 }
 
 pre, code {
-    font-family: 'Ubuntu Mono';
+    font-family: 'Consolas';
     font-size: 15px;
     background: transparent;
+}
+
+.centered h1 {
+    text-align: center !important;
+    margin-bottom: 2rem !important;
+}
+
+.centered a.reference {
+    text-align: center !important;
 }
 
 pre, * pre {

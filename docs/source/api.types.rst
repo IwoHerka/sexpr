@@ -14,7 +14,7 @@ Multiple
     :undoc-members:
     :show-inheritance:
 
-Non_Terminal
+Non-Terminal
 ^^^^^^^^^^^^
 
 .. automodule:: sexpr.types.non_terminal

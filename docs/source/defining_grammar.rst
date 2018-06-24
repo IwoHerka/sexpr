@@ -79,3 +79,29 @@ For example::
 In the example above, '?', '+' and '*' are so-called repetition modifiers.
 Because of restrictions of YAML syntax, optional terms must be wrapped
 in quotation marks.
+
+Terminal Rules
+---------------
+
+In **sexpr**, terminal rules can be object literals (e.g. ``7`` or ``[1, 2, 3]``),
+regular expressions (compiled using standard ``re`` module) or Python's
+types:
+
+.. code-block:: python
+
+    lucky_number:
+        777
+    varname:
+        !regexpr '[a-zA-Z_]+' # Parsed using Python's re module.
+    sequence:
+        '~list' # Any descendant of list.
+    dictionary:
+        '=dict' # Strict check. This will match dict() but not OrderedDict().
+
+When terminal rules are object literals, values in s-expression are compared
+with Python's ``==`` operator. In case of regular expressions (which are
+are prefix with ``!regexpr`` directive), terminal
+values must be strings or ``bytes`` and match defined pattern. Finally,
+in case of types, values are matches using ``isinstance`` and ``type()``
+bultins (for "~" and "=" modifiers respectively). Type modifiers are
+required.
