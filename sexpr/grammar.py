@@ -14,6 +14,7 @@ _str_format = '''
 
 class Grammar(Matcher):
     def __init__(self, source, options = None):
+        self.yaml = source
         rules = source.get('rules', {})
 
         self.options = options or {}
