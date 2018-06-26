@@ -1,3 +1,5 @@
+<img align="right" height="400" src="https://raw.githubusercontent.com/IwoHerka/sexpr/master/lisp_theory_and_practice.jpg">
+
 ## S-expression toolkit for Python
 
 [![Build Status](https://travis-ci.org/IwoHerka/sexpr.svg?branch=master)](https://travis-ci.org/IwoHerka/sexpr)
@@ -12,6 +14,8 @@ check out full <a href="http://sexpr.readthedocs.io/en/latest/">documentation</a
 Finally, for example usage, you can read about
 <a href="https://github.com/IwoHerka/booldog">booldog</a> - micro-package for
 compiling s-expression into predicate functions.
+
+<br/>
 
 In short, **sexpr** is:
 
