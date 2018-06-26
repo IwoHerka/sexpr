@@ -14,16 +14,15 @@ _str_format = '''
 
 class Grammar(Matcher):
     def __init__(self, source, options = None):
-        self.yaml = source
-        rules = source.get('rules', {})
-
         self.options = options or {}
+        self.yaml = source.get('rules', {})
         self.path = self.options.get('path', None)
-        self.rules = self.compile_rules(rules)
+        self.rules = self.compile_rules(self.yaml)
 
         try:
             self.root = self.options.get('root', None)
-            self.root = self.root or list(rules.items())[0][0]
+            self.root = self.root or list(self.yaml.items())[0][0]
+            self.top_tags = self.yaml.get(self.root, [])
         except IndexError:
             raise ValueError('Cannot load root node. Grammar is ill-formed.')
 
