@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name             = 'sexpr',
-    version          = '0.1.3',
+    version          = '0.1.4',
     license          = 'MIT',
     requires         = ['python (>= 3.4)'],
     provides         = ['sexpr'],
