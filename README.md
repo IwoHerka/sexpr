@@ -11,8 +11,8 @@
 
 If want a quick summary of the features have a look at the README and when ready
 check out full <a href="http://sexpr.readthedocs.io/en/latest/">documentation</a>.
-Finally, for example usage, you can read about
-<a href="https://github.com/IwoHerka/booldog">booldog</a> - micro-package for
+Additionally, as an example usage, take a look at
+<a href="https://github.com/IwoHerka/auk">auk</a> - micro-package for
 compiling s-expression into predicate functions.
 
 <br/>
