@@ -29,7 +29,7 @@ class Grammar(Matcher):
     def sexpr(self, sexpr):
         if isinstance(sexpr, Sexpr):
             return sexpr
-        return Sexpr(sexpr, self) if self.matches(sexpr) else None
+        return Sexpr(sexpr, self)
 
     def __repr__(self):
         print_rule = lambda r: '{} = {}'.format(r.name, r.body)
