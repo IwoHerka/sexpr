@@ -7,7 +7,6 @@ from .grammar import Grammar
 
 
 def is_pathname_valid(pathname):
-    """Test whether a path exists.  Returns False for broken symbolic links"""
     try:
         st = os.stat(pathname)
     except os.error:
@@ -26,8 +25,9 @@ def load(source, options = None):
         return load_dict(source, options)
 
     else:
-        raise TypeError('Attempted to load grammar from '
-                        'invalid source: %s' % type(source))
+        raise TypeError(
+            'Attempted to load grammar from invalid source: %s' % type(source)
+        )
 
 
 def load_file(path, options = None):
