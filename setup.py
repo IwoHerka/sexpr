@@ -1,8 +1,10 @@
 import setuptools
+import sexpr
+
 
 setuptools.setup(
     name             = 'sexpr',
-    version          = '0.1.4',
+    version          = sexpr.__version__,
     license          = 'MIT',
     requires         = ['python (>= 3.4)'],
     provides         = ['sexpr'],
