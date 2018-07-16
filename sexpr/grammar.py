@@ -13,6 +13,12 @@ _str_format = '''
 
 
 class Grammar(Matcher):
+    registered_tags = {}
+
+    @classmethod
+    def register(cls, tag, tag_class):
+        cls.registered_tags[tag]  = tag_class
+
     def __init__(self, source, options = None):
         self.options = options or {}
         self.yaml = source.get('rules', {})
@@ -26,9 +32,21 @@ class Grammar(Matcher):
         except IndexError:
             raise ValueError('Cannot load root node. Grammar is ill-formed.')
 
+
     def sexpr(self, sexpr):
+        if isinstance(sexpr, list) and sexpr and sexpr[0] in self.rules:
+            sexpr = [sexpr[0]] + [self.sexpr(n) for n in sexpr[1:]]
+            return self.tag_node(sexpr)
+
+        return sexpr
+
+    def tag_node(self, sexpr):
         if isinstance(sexpr, Sexpr):
             return sexpr
+
+        elif sexpr and sexpr[0] in self.registered_tags:
+            return self.registered_tags[sexpr[0]](sexpr, self)
+
         return Sexpr(sexpr, self)
 
     def __repr__(self):
