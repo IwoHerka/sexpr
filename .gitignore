@@ -114,7 +114,7 @@ venv.bak/
 [._]sw[a-p]
 
 # Session
-Session.vim
+*.vim
 
 # Temporary
 .netrwhist
