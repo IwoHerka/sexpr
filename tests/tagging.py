@@ -43,7 +43,7 @@ class Exp4(Sexpr):
 Grammar.register('exp1', Exp1)
 Grammar.register('exp2', Exp2)
 Grammar.register('exp3', Exp3)
-Grammar.register('exp4', Exp4)
+sexpr.register('exp4', Exp4)
 
 
 class TaggingTest(unittest.TestCase):
