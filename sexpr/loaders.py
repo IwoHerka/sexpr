@@ -6,9 +6,18 @@ import yamlloader
 from .grammar import Grammar
 
 
+def is_pathname_valid(pathname):
+    """Test whether a path exists.  Returns False for broken symbolic links"""
+    try:
+        st = os.stat(pathname)
+    except os.error:
+        return False
+    return True
+
+
 def load(source, options = None):
     if isinstance(source, str):
-        if os.path.exists(source):
+        if is_pathname_valid(source):
             return load_file(source, options)
         else:
             return load_string(source, options)

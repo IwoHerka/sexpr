@@ -5,10 +5,6 @@ import unittest
 from sexpr.grammar import Grammar
 
 
-cd = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-file_path = os.path.join(cd, 'bool.yml')
-
-
 grammar = sexpr.load('''
     root:
         exp1

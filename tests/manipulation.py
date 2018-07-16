@@ -1,10 +1,8 @@
-import os
 import unittest
 
 from sexpr import extend, inject, load, Sexpr
 
-cd = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-grammar = load(os.path.join(cd, 'predicate.yml'))
+grammar = load('tests/predicate.yml')
 
 
 class ManipulationTestCase(unittest.TestCase):

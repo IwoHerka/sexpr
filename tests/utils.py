@@ -56,4 +56,3 @@ def random_list(max_len = 10, seed = None, constructors = None):
     )
 
     return gen_list(0)
-
