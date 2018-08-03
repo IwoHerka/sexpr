@@ -6,5 +6,9 @@ from .print import pprint
 from .grammar import Grammar
 
 
-def register(tag, tag_class):
-    Grammar.register(tag, tag_class)
+def register(*args):
+    if args and isinstance(args[0], tuple):
+        for arg in args:
+            Grammar.register(*arg)
+    else:
+        Grammar.register(*args)
