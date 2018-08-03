@@ -38,3 +38,17 @@ class Sexpr(object):
 
     def __repr__(self):
         return '(sexpr {})'.format(self.sexpr)
+
+    def with_insert(self, index, sexpr):
+        self.sexpr.insert(index, self.grammar.sexpr(sexpr))
+        return self
+
+    def find_child(self, tag):
+        for s in self.sexpr:
+            if s.tag == tag:
+                return s
+            else:
+                candidate = self.find_child(s)
+                
+                if candidate and candidate.tag == tag:
+                    return candidate
