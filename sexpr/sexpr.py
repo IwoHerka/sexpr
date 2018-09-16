@@ -1,5 +1,7 @@
 from copy import deepcopy
 
+from .print import pformat
+
 
 def inject(sexpr, func):
     body = func(*sexpr[1:] if sexpr else None)
@@ -12,7 +14,7 @@ def extend(sexpr, func):
 
 
 class Sexpr(object):
-    def __init__(self, sexpr, grammar):
+    def __init__(self, sexpr, grammar=None):
         self.sexpr = sexpr
         self.grammar = grammar
 
@@ -37,10 +39,17 @@ class Sexpr(object):
         return deepcopy(self.body)
 
     def __repr__(self):
-        return '(sexpr {})'.format(self.sexpr)
+        return repr(self.sexpr)
+
+    def __str__(self):
+        return pformat(self.sexpr)
 
     def with_insert(self, index, sexpr):
-        self.sexpr.insert(index, self.grammar.sexpr(sexpr))
+        self.sexpr.insert(index, sexpr)
+        return self
+
+    def with_replace(self, index, sexpr):
+        self.sexpr[index] = sexpr
         return self
 
     def find_child(self, tag):
@@ -49,6 +58,16 @@ class Sexpr(object):
                 return s
             else:
                 candidate = self.find_child(s)
-                
+
                 if candidate and candidate.tag == tag:
                     return candidate
+
+    def find_and_replace(self, test, replace):
+        for i, c in enumerate(self.body):
+            if test(c):
+                self.sexpr[i + 1] = replace(c)
+
+            elif isinstance(c, Sexpr):
+                self.sexpr[i + 1] = c.find_and_replace(test, replace)
+
+        return self
