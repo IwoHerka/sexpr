@@ -53,6 +53,12 @@ class Sexpr(object):
         self.sexpr[index] = sexpr
         return self
 
+    def find_closest_child(self, *tags):
+        """Search for a tag among direct children of the s-expression."""
+        for child in self.body:
+            if isinstance(child, Sexpr) and child.tag in tags:
+                return child
+
     def find_child(self, tag):
         for s in self.sexpr:
             if s.tag == tag:
