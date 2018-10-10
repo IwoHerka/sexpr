@@ -42,6 +42,9 @@ class Sexpr(object):
     def __str__(self):
         return pformat(self.sexpr)
 
+    def __len__(self):
+        return len(self.sexpr)
+
     def with_insert(self, index, sexpr):
         self.sexpr.insert(index, sexpr)
         return self
