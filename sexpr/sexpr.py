@@ -1,7 +1,5 @@
 from copy import deepcopy
 
-from .print import pformat
-
 
 def inject(sexpr, func):
     body = func(*sexpr[1:] if sexpr else None)
@@ -71,3 +69,6 @@ class Sexpr(object):
                 self.sexpr[i + 1] = c.find_and_replace(test, replace)
 
         return self
+
+
+from .print import pformat
