@@ -12,7 +12,7 @@ def extend(sexpr, func):
 
 
 class Sexpr(object):
-    def __init__(self, sexpr, grammar=None):
+    def __init__(self, sexpr, grammar=None, **kwargs):
         self.sexpr = sexpr
         self.grammar = grammar
 
