@@ -60,14 +60,15 @@ class Sexpr(object):
                 return child
 
     def find_child(self, tag):
-        for s in self.sexpr:
-            if s.tag == tag:
-                return s
-            else:
-                candidate = self.find_child(s)
+        for s in self.body:
+            if isinstance(s, Sexpr):
+                if s.tag == tag:
+                    return s
+                else:
+                    candidate = s.find_child(tag)
 
-                if candidate and candidate.tag == tag:
-                    return candidate
+                    if candidate and candidate.tag == tag:
+                        return candidate
 
     def find_and_replace(self, test, replace):
         for i, c in enumerate(self.body):
