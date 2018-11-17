@@ -1,4 +1,4 @@
-__version__ = '0.1.8'
+__version__ = '0.2.0'
 
 from .loaders import load, load_file, load_string, load_dict
 from .utils import *
