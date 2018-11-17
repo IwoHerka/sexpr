@@ -1,9 +1,11 @@
 from __future__ import print_function
 
+from typing import Union
+
 from .sexpr import Sexpr
 
 
-def pformat(sexp, indent = None):
+def pformat(sexp: Union[list, Sexpr], indent: int=None) -> str:
     is_sexp = lambda s: isinstance(s, (list, Sexpr))
     is_long_sexp = lambda s: is_sexp(s) and len(s) > 2
 
