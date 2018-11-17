@@ -1,40 +1,19 @@
+from typing import TYPE_CHECKING, Callable, Optional
+
 from copy import deepcopy
+from typing import Any
 
 
-def inject(sexpr, func):
-    body = func(*sexpr[1:] if sexpr else None)
-    body = body if isinstance(body, tuple) else (body, )
-    return [sexpr[0], *body]
-
-
-def extend(sexpr, func):
-    return func(sexpr)
-
-
-class Sexpr(object):
-    def __init__(self, sexpr, grammar=None, **kwargs):
+class Sexpr:
+    def __init__(self, sexpr: list, grammar: 'Grammar'=None, **kwargs: Any):
         self.sexpr = sexpr
         self.grammar = grammar
 
     def __getitem__(self, index):
         return self.sexpr[index]
 
-    @property
-    def tag(self):
-        return self.sexpr[0] if self.sexpr else None
-
-    @property
-    def body(self):
-        return self.sexpr[1:] if self.sexpr else None
-
-    def inject(self, func):
-        self.sexpr = inject(self.sexpr, func)
-
-    def extend(self, func):
-        self.sexpr = extend(self.sexpr, func)
-
-    def copy(self):
-        return deepcopy(self.body)
+    def __setitem__(self, index, item):
+        self.sexpr[index] = item
 
     def __repr__(self):
         return repr(self.sexpr)
@@ -45,6 +24,29 @@ class Sexpr(object):
     def __len__(self):
         return len(self.sexpr)
 
+    def __eq__(self, other):
+        if isinstance(other, list):
+            return self.sexpr == other
+
+        return self.sexpr == other.sexpr
+
+    @property
+    def tag(self):
+        return self.sexpr[0] if self.sexpr else None
+
+    @property
+    def body(self):
+        return self.sexpr[1:] if self.sexpr else None
+
+    def copy(self):
+        return deepcopy(self.body)
+
+    def inject(self, func):
+        self.sexpr = inject(self.sexpr, func)
+
+    def extend(self, func):
+        self.sexpr = extend(self.sexpr, func)
+
     def with_insert(self, index, sexpr):
         self.sexpr.insert(index, sexpr)
         return self
@@ -53,32 +55,21 @@ class Sexpr(object):
         self.sexpr[index] = sexpr
         return self
 
-    def find_closest_child(self, *tags):
-        """Search for a tag among direct children of the s-expression."""
-        for child in self.body:
-            if isinstance(child, Sexpr) and child.tag in tags:
-                return child
+    def find_descendant(self, tag: str) -> Optional['Sexpr']:
+        return find_descendant(self, tag)
 
-    def find_child(self, tag):
-        for s in self.body:
-            if isinstance(s, Sexpr):
-                if s.tag == tag:
-                    return s
-                else:
-                    candidate = s.find_child(tag)
+    def find_and_replace(self,
+                         test_fn: Callable[['Sexpr'], bool],
+                         replace_fn: Callable[['Sexpr'], 'Sexpr']) -> 'Sexpr':
 
-                    if candidate and candidate.tag == tag:
-                        return candidate
+        return find_and_replace(self, test_fn, replace_fn)
 
-    def find_and_replace(self, test, replace):
-        for i, c in enumerate(self.body):
-            if test(c):
-                self.sexpr[i + 1] = replace(c)
-
-            elif isinstance(c, Sexpr):
-                self.sexpr[i + 1] = c.find_and_replace(test, replace)
-
-        return self
+    def find_child(self, *tags: str) -> Optional['Sexpr']:
+        return find_child(self, *tags)
 
 
 from .print import pformat
+from .utils import *
+
+if TYPE_CHECKING:
+    from .grammar import Grammar

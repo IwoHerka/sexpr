@@ -1,61 +1,68 @@
-import os
-import sexpr
-import unittest
+import pytest
 
-from sexpr.grammar import Grammar
+from sexpr import load, Grammar
 
 
-grammar = sexpr.load('''
-    root:
-        exp1
-    rules:
-        exp:
-            - exp1
-            - exp2
-        exp1:
-            [ false ]
-        expr2:
-            [ false ]
-''')
+def test_load_from_object_raises_TypeError():
+    with pytest.raises(TypeError):
+        load(object())
 
-class LoadersTest(unittest.TestCase):
-    def test_load_from_object(self):
-        with self.assertRaises(TypeError):
-            sexpr.load(object())
 
-    def test_load_from_string(self):
-        raw = '''
-            rules:
-                exp:
-                    - exp1
-                    - exp2
-                exp1:
-                    [ false ]
-                expr2:
-                    [ true ]
-        '''
+def test_load_from_string():
+    src = '''
+        rules:
+            exp:
+                - exp1
+                - exp2
+            exp1:
+                [ false ]
+            exp2:
+                [ true ]
+    '''
 
-        grammar = sexpr.load(raw)
-        self.assertTrue(isinstance(grammar, Grammar))
-        self.assertEqual(grammar.root, 'exp')
+    grammar = load(src)
 
-        # Test options override default root.
-        grammar = sexpr.load(raw, dict(root='exp1'))
-        self.assertTrue(isinstance(grammar, Grammar))
-        self.assertEqual(grammar.root, 'exp1')
+    assert type(grammar) is Grammar
+    assert grammar.root == 'exp'
+    assert grammar.yaml == {
+        'exp': ['exp1', 'exp2'],
+        'exp1': [False],
+        'exp2': [True]
+    }
 
-    def test_load_from_dict(self):
-        source = {
-            'rules': {
-                'exp': ['exp1', 'exp2'],
-                'exp1': [False],
-                'exp2': [True]
-            }
+
+def test_load_from_dict():
+    src = {
+        'rules': {
+            'exp': ['exp1', 'exp2'],
+            'exp1': [False],
+            'exp2': [True]
         }
-        grammar = sexpr.load(source)
-        self.assertTrue(isinstance(grammar, Grammar))
+    }
 
-        source['root'] = 'exp1'
-        # Test options override default root.
-        grammar = sexpr.load(source)
-        self.assertEqual(grammar.root, 'exp1')
+    grammar = load(src)
+
+    assert type(grammar) is Grammar
+    assert grammar.root == 'exp'
+    assert set(grammar.rules.keys()) == {'exp', 'exp1', 'exp2'}
+
+
+def test_load_from_file():
+    assert load('tests/predicate.yml').root == 'predicate'
+
+
+def test_load_with_overridden_root():
+    src = '''
+        root:
+            exp1
+        rules:
+            exp:
+                - exp1
+                - exp2
+            exp1:
+                [ false ]
+            expr2:
+                [ true ]
+    '''
+
+    assert load(src).root == 'exp1'

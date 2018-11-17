@@ -1,3 +1,5 @@
+from typing import Dict
+
 from .matcher import Matcher
 from .sexpr import Sexpr
 
@@ -13,11 +15,14 @@ _str_format = '''
 
 
 class Grammar(Matcher):
-    registered_tags = {}
+    registered_tags: Dict[str, type] = {}
 
     @classmethod
-    def register(cls, tag, tag_class):
-        cls.registered_tags[tag]  = tag_class
+    def register(cls, *args, **kwargs):
+        items = args if args else kwargs.items()
+
+        for tag, tag_class in items:
+            cls.registered_tags[tag]  = tag_class
 
     def __init__(self, source, options = None):
         self.options = options or {}

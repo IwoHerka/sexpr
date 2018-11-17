@@ -1,36 +1,34 @@
-import unittest
-
 from sexpr import extend, inject, load, Sexpr
 
 grammar = load('tests/predicate.yml')
 
 
-class ManipulationTestCase(unittest.TestCase):
-    def test_pure(self):
-        sexp = ['tautology', True]
-        sexp = inject(sexp, lambda e: not e)
-        sexp = extend(sexp, lambda e: ['not', e])
-        self.assertEqual(sexp, ['not', ['tautology', False]])
+def test_pure():
+    sexp = ['tautology', True]
+    sexp = inject(sexp, lambda e: not e)
+    sexp = extend(sexp, lambda e: ['not', e])
+    assert sexp == ['not', ['tautology', False]]
 
-        sexp = inject(['and', ['lit', True], ['lit', False]], lambda left, right: ['or', left, right])
-        self.assertEqual(sexp, ['and', ['or', ['lit', True], ['lit', False]]])
+    sexp = inject(['and', ['lit', True], ['lit', False]], lambda left, right: ['or', left, right])
+    assert sexp == ['and', ['or', ['lit', True], ['lit', False]]]
 
-    def test_inplace(self):
-        sexp = grammar.sexpr(['tautology', True])
-        sexp.inject(lambda e: not e)
-        sexp.extend(lambda e: ['not', e])
 
-        self.assertEqual(sexp.tag, 'not')
-        self.assertEqual(sexp.body, [['tautology', False]])
-        self.assertEqual(sexp.sexpr, ['not', ['tautology', False]])
+def test_inplace():
+    sexp = grammar.sexpr(['tautology', True])
+    sexp.inject(lambda e: not e)
+    sexp.extend(lambda e: ['not', e])
 
-        q = sexp
-        p = sexp.copy()
+    assert sexp.tag == 'not'
+    assert sexp.body == [['tautology', False]]
+    assert sexp.sexpr == ['not', ['tautology', False]]
 
-        sexp = Sexpr(['not', ['or', p, q]], grammar)
-        sexp.inject(lambda exp: (['not', exp[1]], ['not', exp[2]]))
-        sexp.extend(lambda exp: ['and', *exp[1:]])
+    q = sexp
+    p = sexp.copy()
 
-        self.assertEqual(sexp.tag, 'and')
-        self.assertEqual(sexp.body, [['not', p], ['not', q]])
-        self.assertEqual(sexp.sexpr, ['and', ['not', p], ['not', q]])
+    sexp = Sexpr(['not', ['or', p, q]], grammar)
+    sexp.inject(lambda exp: (['not', exp[1]], ['not', exp[2]]))
+    sexp.extend(lambda exp: ['and', *exp[1:]])
+
+    assert sexp.tag, 'and'
+    assert sexp.body == [['not', p], ['not', q]]
+    assert sexp.sexpr == ['and', ['not', p], ['not', q]]
