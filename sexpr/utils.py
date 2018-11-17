@@ -3,18 +3,18 @@ from typing import Any, Callable, Optional, Dict
 from .sexpr import Sexpr
 
 
-def inject(sexpr: Sexpr, fn: Callable[[Sexpr], Sexpr]) -> Sexpr:
+def inject(sexpr: Sexpr, fn: Callable[[list], list]) -> Sexpr:
     _assert_valid_sexpr(sexpr)
 
-    body = fn(*sexpr[1:] if sexpr else None)
-    body = body if isinstance(body, tuple) else (body, )
+    result = fn(*sexpr[1:] if sexpr else [])
+    body = result if isinstance(result, tuple) else (result, )
     return Sexpr([sexpr[0], *body], getattr(sexpr, 'grammar', None))
 
 
-def extend(sexpr: Sexpr, fn: Callable[[Sexpr], Sexpr]) -> Sexpr:
+def extend(sexpr: Sexpr, fn: Callable[[list], list]) -> Sexpr:
     _assert_valid_sexpr(sexpr)
 
-    return Sexpr(fn(sexpr), getattr(sexpr, 'grammar', None))
+    return Sexpr(fn(sexpr.sexpr), getattr(sexpr, 'grammar', None))
 
 
 def find_descendant(sexpr: Sexpr, tag: str) -> Optional[Sexpr]:
