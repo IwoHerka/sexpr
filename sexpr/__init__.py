@@ -1,14 +1,14 @@
 __version__ = '0.1.8'
 
 from .loaders import load, load_file, load_string, load_dict
-from .sexpr import Sexpr, inject, extend
+from .utils import *
+from .sexpr import Sexpr
 from .print import pprint
 from .grammar import Grammar
 
 
-def register(*args):
-    if args and isinstance(args[0], tuple):
-        for arg in args:
-            Grammar.register(*arg)
+def register(*args, **kwargs):
+    if args:
+        Grammar.register(args)
     else:
-        Grammar.register(*args)
+        Grammar.register(**kwargs)
