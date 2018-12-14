@@ -3,7 +3,7 @@ import pytest
 from sexpr import *
 
 
-def test_inject():
+def test_inject_0():
     obj1 = object()
     obj2 = object()
     sexpr = ['tag', obj1]
@@ -14,6 +14,12 @@ def test_inject():
     assert injected[1][0] == obj1
     assert injected[1][1] == obj2
     assert not injected.grammar
+
+
+def test_inject_1():
+    obj1 = object()
+    obj2 = object()
+    sexpr = ['tag', obj1]
 
     grammar = load('''
         rules:
@@ -26,6 +32,22 @@ def test_inject():
     injected = inject(sexpr, lambda x: x)
 
     assert injected.grammar == grammar
+
+    fn = lambda left, right: ['or', left, right]
+    sexp = inject(['and', ['lit', True], ['lit', False]], fn)
+    assert sexp == ['and', ['or', ['lit', True], ['lit', False]]]
+
+
+def test_extend_0():
+    sexp = ['lit', True]
+    fn = lambda exp: ['not', [exp[0], not exp[1]]]
+    assert ['not', ['lit', False]] == extend(fn, sexp)
+
+
+def test_extend_1():
+    sexp = ['tautology', True]
+    sexp = extend(lambda e: [e, 'tag'], sexp)
+    assert sexp == [['tautology', True], 'tag']
 
 
 def test_find_descendant():

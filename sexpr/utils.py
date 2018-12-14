@@ -18,7 +18,14 @@ def inject(sexpr: Sexpr, fn: Callable[[Sexpr], Sexpr]) -> Sexpr:
     return Sexpr([sexpr[0], *body], getattr(sexpr, 'grammar', None))
 
 
-def extend(sexpr: Sexpr, fn: Callable[[Sexpr], Sexpr]) -> Sexpr:
+def extend(fn: Callable[[Sexpr], Sexpr], sexpr: Sexpr) -> Sexpr:
+    """
+    Transform `sexpr` by applying of `fn` on it. `fn` must accept and
+    return s-expression. Example:
+
+        >>> extend(['lit', True], lambda exp: ['not', [exp[0], not exp[1]]])
+        >>> ['not', ['lit', False]]]
+    """
     assert _is_valid_sexpr(sexpr)
 
     return Sexpr(fn(sexpr), getattr(sexpr, 'grammar', None))

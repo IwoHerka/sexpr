@@ -45,7 +45,7 @@ class Sexpr:
         self.sexpr = inject(self.sexpr, func)
 
     def extend(self, func):
-        self.sexpr = extend(self.sexpr, func)
+        self.sexpr = extend(func, self.sexpr)
 
     def with_insert(self, index, sexpr):
         self.sexpr.insert(index, sexpr)

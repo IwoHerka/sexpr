@@ -3,16 +3,6 @@ from sexpr import extend, inject, load, Sexpr
 grammar = load('tests/predicate.yml')
 
 
-def test_pure():
-    sexp = ['tautology', True]
-    sexp = inject(sexp, lambda e: not e)
-    sexp = extend(sexp, lambda e: ['not', e])
-    assert sexp == ['not', ['tautology', False]]
-
-    sexp = inject(['and', ['lit', True], ['lit', False]], lambda left, right: ['or', left, right])
-    assert sexp == ['and', ['or', ['lit', True], ['lit', False]]]
-
-
 def test_inplace():
     sexp = grammar.sexpr(['tautology', True])
     sexp.inject(lambda e: not e)
