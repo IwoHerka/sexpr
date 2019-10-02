@@ -17,7 +17,7 @@ setuptools.setup(
     author_email     = 'hi@iwoherka.eu',
 
     install_requires = [
-        'pyyaml==3.12',
+        'pyyaml==5.1',
         'yamlloader==0.5.2'
     ],
 
